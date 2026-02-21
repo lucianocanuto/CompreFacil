@@ -47,6 +47,7 @@ dependencies {
 
     // Hilt Ksp
     implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.androidx.recyclerview)
 
 
     ksp("com.google.dagger:hilt-compiler:2.51.1")

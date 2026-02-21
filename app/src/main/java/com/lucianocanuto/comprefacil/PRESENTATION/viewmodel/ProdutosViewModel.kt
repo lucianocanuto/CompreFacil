@@ -20,7 +20,7 @@ class ProdutosViewModel @Inject constructor(
     private val produtoObservalvel = MutableLiveData<Resource<List<Produto>>>()
     val produto : LiveData<Resource<List<Produto>>> = produtoObservalvel
 
-    suspend fun buscarProduto(){
+   fun buscarProduto(){
 
         produtoObservalvel.value = Resource.Carregando()
 
