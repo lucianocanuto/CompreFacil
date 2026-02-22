@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val produtoViewModel: ProdutosViewModel by viewModels()
+    private lateinit var adapter : ProdutosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
