@@ -1,9 +1,11 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.ProdutosViewModel
 import com.lucianocanuto.comprefacil.UTIL.CompreFacilLogo
 import com.lucianocanuto.comprefacil.UTIL.Resource
@@ -29,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         produtoViewModel.buscarProduto()
         binding.txtLogo.text = CompreFacilLogo()
 
+
+        //Aqui configura recyclerView
+        adapter = ProdutosAdapter()
+        binding.rvListaProdutos.layoutManager = LinearLayoutManager(this)
+        binding.rvListaProdutos.adapter = adapter
+
         produtoViewModel.produto.observe(this){ retorno ->
 
             when(retorno){
@@ -36,10 +44,11 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 is Resource.Sucesso -> {
-
+                    adapter.submitList(retorno.data)
 
                 }
                 is Resource.Erro -> {
+                    Toast.makeText(this, "${retorno.mensagem}", Toast.LENGTH_SHORT).show()
 
                 }
             }
