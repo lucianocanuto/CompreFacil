@@ -12,14 +12,16 @@ import com.bumptech.glide.Glide
 import com.lucianocanuto.comprefacil.DOMAIN.model.Produto
 import com.lucianocanuto.comprefacil.R
 
-class ProdutosAdapter : ListAdapter<Produto, ProdutosAdapter.ProdutosViewHolder>
-    (ListaProdutos()){
+class ProdutosAdapter(
+    private val onClick: (Produto) -> Unit
+) : ListAdapter<Produto, ProdutosAdapter.ProdutosViewHolder>(ListaProdutos()) {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ProdutosViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.layout_produto,parent,false)
+        val view = inflater.inflate(R.layout.layout_produto, parent, false)
         return ProdutosViewHolder(view)
     }
 
@@ -27,19 +29,25 @@ class ProdutosAdapter : ListAdapter<Produto, ProdutosAdapter.ProdutosViewHolder>
         holder: ProdutosViewHolder,
         position: Int
     ) {
-        holder.viculador(getItem(position))
+        holder.bind(getItem(position))
     }
 
-    inner class ProdutosViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
+    inner class ProdutosViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
 
-      //Aqui faço a associação dos objetos
-        private val imgProduto : ImageView = itemView.findViewById(R.id.imgProduto)
-        private val nomeProduto: TextView = itemView.findViewById(R.id.txtNomeProduto)
-        private val precoProduto: TextView = itemView.findViewById(R.id.txtPreco)
+        private val imgProduto: ImageView =
+            itemView.findViewById(R.id.imgProduto)
+        private val nomeProduto: TextView =
+            itemView.findViewById(R.id.txtNomeProduto)
+        private val precoProduto: TextView =
+            itemView.findViewById(R.id.txtPreco)
 
-        //Aqui nome padrão é bind -> vincular
+        fun bind(produto: Produto) {
 
-        fun viculador ( produto : Produto ){
+            itemView.setOnClickListener {
+                onClick(produto)
+            }
+
             nomeProduto.text = produto.titulo
             precoProduto.text = produto.preco.toString()
 
@@ -47,11 +55,10 @@ class ProdutosAdapter : ListAdapter<Produto, ProdutosAdapter.ProdutosViewHolder>
                 .load(produto.imagem)
                 .into(imgProduto)
         }
-
     }
 
+    class ListaProdutos : DiffUtil.ItemCallback<Produto>() {
 
-    class ListaProdutos: DiffUtil.ItemCallback<Produto>(){
         override fun areItemsTheSame(
             oldItem: Produto,
             newItem: Produto
@@ -61,6 +68,5 @@ class ProdutosAdapter : ListAdapter<Produto, ProdutosAdapter.ProdutosViewHolder>
             oldItem: Produto,
             newItem: Produto
         ) = oldItem == newItem
-
     }
 }

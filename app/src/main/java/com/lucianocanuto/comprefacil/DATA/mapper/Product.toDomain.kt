@@ -8,6 +8,8 @@ fun Product.toDomain(): Produto {
         id = id,
         titulo = title,
         preco = price,
-        imagem = thumbnail
+        imagem = thumbnail,
+        descricao = description
+
     )
 }

@@ -1,5 +1,6 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -33,7 +34,11 @@ class MainActivity : AppCompatActivity() {
 
 
         //Aqui configura recyclerView
-        adapter = ProdutosAdapter()
+        adapter = ProdutosAdapter { produto ->
+            val click = Intent(this,ProdutoDetalhes::class.java)
+            click.putExtra("produtoId" , produto.id)
+            startActivity(click)
+        }
         binding.rvListaProdutos.layoutManager = LinearLayoutManager(this)
         binding.rvListaProdutos.adapter = adapter
 
