@@ -3,7 +3,7 @@ package com.lucianocanuto.comprefacil.DATA.RoomDataBase
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity (tableName = "carrinho")
 data class CarrinhoItem(
 
     @PrimaryKey
