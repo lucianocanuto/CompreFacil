@@ -18,22 +18,25 @@ class DestalhesProdutoViewModel @Inject constructor(
 ): ViewModel(){
 
     private val observalvel = MutableLiveData<Resource<Produto>>()
-    //val produtoDt : LiveData<Resource<Produto>> = Observalvel
+    val produtoDt : LiveData<Resource<Produto>> = observalvel
 
-    fun buscarProdutoDt(){
+
+    fun buscarProdutoDt(id: Int){
 
         observalvel.value = Resource.Carregando()
 
         viewModelScope.launch{
-            observalvel.value = Resource.Carregando()
 
-            /*try {
-                val dtProduto = repository.buscarProdutos()
+
+            try {
+                val dtProduto = repository.buscarProdutoPorId(id)
                 observalvel.value = Resource.Sucesso (dtProduto)
 
-            }catch (e: Exception){
-                e.printStackTrace()
-            }*/
+            }catch (e: Exception) {
+                observalvel.value = Resource.Erro(
+                    e.message ?: "Erro ao buscar produto"
+                )
+            }
         }
 
     }
