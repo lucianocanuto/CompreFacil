@@ -65,7 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="#E6DFE7FF"
-                android:textSize="20sp"
+                android:padding="8dp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -74,15 +75,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="#E6DFE7FF"
+                android:padding="8dp"
                 android:textColor="@android:color/holo_green_dark"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtDescricaoDetalhe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="#E6DFE7FF" />
+                android:background="#E6DFE7FF"
+                android:padding="8dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCarrinho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#DAA520"
+                android:text="Adicionar ao carrinho"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="0dp" />
 
         </LinearLayout>
     </ScrollView>
