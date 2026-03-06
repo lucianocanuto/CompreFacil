@@ -9,10 +9,14 @@ import javax.inject.Inject
 class ProdutosRepositoryImpl @Inject constructor(
     private val dummyApi: DummyApi
 ) : ProdutosRepository {
-    override suspend fun buscarProdutos(): List<Produto> {
-        return dummyApi.listarProdutos().products.map { dto->
-            dto.toDomain()
 
+    override suspend fun buscarProdutos(): List<Produto> {
+        return dummyApi.listarProdutos().products.map { dto ->
+            dto.toDomain()
         }
+    }
+
+    override suspend fun buscarProdutoPorId(id: Int): Produto {
+        return dummyApi.buscarProdutoPorId(id).toDomain()
     }
 }
