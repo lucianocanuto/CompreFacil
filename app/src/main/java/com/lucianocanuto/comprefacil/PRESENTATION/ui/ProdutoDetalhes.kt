@@ -1,18 +1,24 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.lucianocanuto.comprefacil.DATA.RoomDataBase.CarrinhoDao
+import com.lucianocanuto.comprefacil.DATA.RoomDataBase.CarrinhoItem
+import com.lucianocanuto.comprefacil.DOMAIN.model.Produto
 import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.DestalhesProdutoViewModel
 import com.lucianocanuto.comprefacil.R
 import com.lucianocanuto.comprefacil.UTIL.CompreFacilLogo
 import com.lucianocanuto.comprefacil.UTIL.Resource
 import com.lucianocanuto.comprefacil.databinding.ActivityProdutoDetalhesBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProdutoDetalhes : AppCompatActivity() {
@@ -23,8 +29,11 @@ class ProdutoDetalhes : AppCompatActivity() {
 
     private val dtProdutoViewModel: DestalhesProdutoViewModel by viewModels()
 
+    private var produtoAtual: Produto? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.e("teste", "TELA DETALHES ABRIU")
         enableEdgeToEdge()
         setContentView(binding.root)
 
@@ -48,6 +57,7 @@ class ProdutoDetalhes : AppCompatActivity() {
 
                 is Resource.Sucesso -> {
                     val produto = resource.data
+                    produtoAtual = produto
 
                     binding.txtTituloDetalhe.text = produto?.titulo
                     binding.txtPrecoDetalhe.text = "R$ ${produto?.preco}"
@@ -62,6 +72,17 @@ class ProdutoDetalhes : AppCompatActivity() {
                     // erro
                 }
             }
+
         }
+
+        binding.btnCarrinho.setOnClickListener {
+
+                produtoAtual?.let {
+                    dtProdutoViewModel.adicionarAoCarrinho(it)
+                }
+
+        }
+
+
     }
 }

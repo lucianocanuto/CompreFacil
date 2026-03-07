@@ -1,9 +1,11 @@
 package com.lucianocanuto.comprefacil.DATA.RoomDataBase
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 
+@Dao
 interface CarrinhoDao {
 
     @Query("SELECT * FROM carrinho WHERE produtoId = :produtoId LIMIT 1")
