@@ -96,7 +96,19 @@
                 android:layout_marginTop="8dp"
                 android:backgroundTint="#DAA520"
                 android:text="Adicionar ao carrinho"
-                android:textColor="@android:color/holo_blue_dark"
+                android:textColor="#7F0000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="0dp" />
+
+            <Button
+                android:id="@+id/btnVerCarrinho"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#DAA520"
+                android:text="Ver carrinho"
+                android:textColor="#7F0000"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:cornerRadius="0dp" />

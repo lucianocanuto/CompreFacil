@@ -1,5 +1,8 @@
 package com.lucianocanuto.comprefacil.DATA.dto
 
+import com.lucianocanuto.comprefacil.DATA.dto.viacep.Dimensions
+import com.lucianocanuto.comprefacil.DATA.dto.viacep.Meta
+
 data class Product(
     val availabilityStatus: String,
     val brand: String,

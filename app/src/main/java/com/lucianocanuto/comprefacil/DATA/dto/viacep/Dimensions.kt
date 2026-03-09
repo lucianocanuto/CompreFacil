@@ -1,4 +1,4 @@
-package com.lucianocanuto.comprefacil.DATA.dto
+package com.lucianocanuto.comprefacil.DATA.dto.viacep
 
 data class Dimensions(
     val depth: Double,
