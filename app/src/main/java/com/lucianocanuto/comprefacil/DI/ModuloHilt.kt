@@ -1,6 +1,7 @@
 package com.lucianocanuto.comprefacil.DI
 
 import com.lucianocanuto.comprefacil.DATA.remote.DummyApi
+import com.lucianocanuto.comprefacil.DATA.remote.ViaCepAPI
 import com.lucianocanuto.comprefacil.DATA.repository.ProdutosRepositoryImpl
 import com.lucianocanuto.comprefacil.DOMAIN.repository.ProdutosRepository
 import com.lucianocanuto.comprefacil.UTIL.Constantes
@@ -21,7 +22,7 @@ object ModuloHilt {
     @Singleton
     fun proverRetrofit() : Retrofit{ //Aqui é onde faz a conexao com a API
         return Retrofit.Builder()
-            .baseUrl(Constantes.BASE_URL)
+            .baseUrl(Constantes.DUMMY_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -32,6 +33,22 @@ object ModuloHilt {
         return retrofit.create(DummyApi::class.java)
 
     }
+
+
+  /*  @Provides
+    @Singleton
+    fun proverconexaoViaCep(): Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(Constantes.VIACEP_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun proverViaCepAPI(retrofit: Retrofit): ViaCepAPI{
+        return retrofit.create(ViaCepAPI::class.java)
+    }*/
 
 
 }

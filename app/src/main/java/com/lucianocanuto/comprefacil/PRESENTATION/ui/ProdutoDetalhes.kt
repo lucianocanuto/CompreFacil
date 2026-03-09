@@ -1,7 +1,9 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -80,7 +82,15 @@ class ProdutoDetalhes : AppCompatActivity() {
                 produtoAtual?.let {
                     dtProdutoViewModel.adicionarAoCarrinho(it)
                 }
+            Toast.makeText(this,
+                "Produto: ${it.id} adicionado com sucesso!",
+                Toast.LENGTH_SHORT).show()
 
+        }
+
+        binding.btnVerCarrinho.setOnClickListener {
+            val abrirCarrinho = Intent(this, CarrinhoActivity::class.java)
+            startActivity(abrirCarrinho)
         }
 
 

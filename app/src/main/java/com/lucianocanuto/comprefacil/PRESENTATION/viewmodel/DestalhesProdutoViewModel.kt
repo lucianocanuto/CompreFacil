@@ -1,6 +1,7 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.viewmodel
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,8 +47,8 @@ class DestalhesProdutoViewModel @Inject constructor(
     }
 
     fun adicionarAoCarrinho (produto: Produto){
-        viewModelScope.launch {
 
+        viewModelScope.launch {
 
             val produtoCarrinho = carrinhoRepository.buscarProdutoCarrinho(produto.id)
 
@@ -72,11 +73,13 @@ class DestalhesProdutoViewModel @Inject constructor(
             val carrinho = carrinhoRepository.listarCarrinho()
 
             carrinho.forEach {
+
                 Log.e(
                     "Carrinho_Debug",
                     "Produto: ${it.titulo} | Quantidade: ${it.quantidade}"
                 )
             }
+
         }
     }
 }
