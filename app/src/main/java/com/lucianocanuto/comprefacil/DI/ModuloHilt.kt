@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -35,9 +36,10 @@ object ModuloHilt {
     }
 
 
-  /*  @Provides
+    @Provides
     @Singleton
-    fun proverconexaoViaCep(): Retrofit{
+    @Named("ViaCepRetrofit")
+    fun proverConexaoViaCep(): Retrofit{
         return Retrofit.Builder()
             .baseUrl(Constantes.VIACEP_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,9 +48,12 @@ object ModuloHilt {
 
     @Provides
     @Singleton
-    fun proverViaCepAPI(retrofit: Retrofit): ViaCepAPI{
+    fun proverViaCepAPI(
+        @Named("ViaCepRetrofit")
+        retrofit: Retrofit): ViaCepAPI {
+
         return retrofit.create(ViaCepAPI::class.java)
-    }*/
+    }
 
 
 }
