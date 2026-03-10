@@ -1,5 +1,6 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -30,6 +31,9 @@ class CarrinhoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+
+
+
 
         binding.txtLogo.text = CompreFacilLogo()
 
@@ -74,6 +78,20 @@ class CarrinhoActivity : AppCompatActivity() {
             binding.textSubTotal.text = "Total: R$ %.2f".format(total)
             binding.txtFrete.text = "Frete: Voce tem frete gratis!"
             binding.txtTotal.text = "Total: R$ %.2f".format(total)
+
+        }
+        binding.btnFinalizar.setOnClickListener {
+
+
+            val usuarioLogado = getSharedPreferences("usuario", MODE_PRIVATE)
+            val logado = usuarioLogado.getBoolean("logado", false)
+
+            if (logado){
+                //abrirPagamento()
+            }else{
+                startActivity(Intent(this,CadastroActivity::class.java))
+            }
+
 
         }
 

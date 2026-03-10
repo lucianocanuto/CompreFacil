@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompreFacil">
         <activity
+            android:name=".PRESENTATION.ui.CadastroActivity"
+            android:exported="false" />
+        <activity
             android:name=".PRESENTATION.ui.CarrinhoActivity"
             android:exported="false" />
         <activity
