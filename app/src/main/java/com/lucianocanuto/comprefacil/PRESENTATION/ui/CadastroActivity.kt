@@ -50,7 +50,7 @@ class CadastroActivity : AppCompatActivity() {
 
             Toast.makeText(this,"Cadastro realizado!",Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this, CarrinhoActivity::class.java))
+            startActivity(Intent(this, PagamentoActivity::class.java))
             finish()
         }
 

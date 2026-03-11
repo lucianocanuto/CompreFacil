@@ -87,7 +87,7 @@ class CarrinhoActivity : AppCompatActivity() {
             val logado = usuarioLogado.getBoolean("logado", false)
 
             if (logado){
-                //abrirPagamento()
+                startActivity(Intent(this, PagamentoActivity::class.java))
             }else{
                 startActivity(Intent(this,CadastroActivity::class.java))
             }
