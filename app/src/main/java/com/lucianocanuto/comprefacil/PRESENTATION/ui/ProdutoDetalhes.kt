@@ -3,6 +3,7 @@ package com.lucianocanuto.comprefacil.PRESENTATION.ui
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -38,6 +39,11 @@ class ProdutoDetalhes : AppCompatActivity() {
 
         binding.txtLogo.text = CompreFacilLogo()
 
+        binding.txtCarrinhoCont.setOnClickListener {
+            startActivity(Intent(this, CarrinhoActivity::class.java))
+            finish()
+        }
+
         // Carrega carrinho ao abrir tela
         carrinhoViewModel.listarCarrinho()
 
@@ -56,11 +62,9 @@ class ProdutoDetalhes : AppCompatActivity() {
             when (resource) {
 
                 is Resource.Carregando -> {
-                    // loading
                 }
 
                 is Resource.Sucesso -> {
-
                     val produto = resource.data
                     produtoAtual = produto
 
@@ -79,10 +83,9 @@ class ProdutoDetalhes : AppCompatActivity() {
             }
         }
 
+
         binding.btnCarrinho.setOnClickListener {
-
             produtoAtual?.let {
-
                 dtProdutoViewModel.adicionarAoCarrinho(it)
 
                 Toast.makeText(
@@ -92,14 +95,18 @@ class ProdutoDetalhes : AppCompatActivity() {
                 ).show()
 
             }
-
         }
 
-        binding.btnVerCarrinho.setOnClickListener {
 
+        binding.btnVerCarrinho.setOnClickListener {
             val abrirCarrinho = Intent(this, CarrinhoActivity::class.java)
             startActivity(abrirCarrinho)
 
+        }
+
+        binding.btnContinuarCompra.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         // Observer do contador do carrinho

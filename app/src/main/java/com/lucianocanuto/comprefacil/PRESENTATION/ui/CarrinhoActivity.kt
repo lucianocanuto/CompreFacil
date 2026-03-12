@@ -39,7 +39,7 @@ class CarrinhoActivity : AppCompatActivity() {
         binding.txtLogo.text = CompreFacilLogo()
 
         binding.recyclerCarrinho.layoutManager = LinearLayoutManager(this)
-        carrinhoAdapter = CarrinhoAdapter(emptyList()){ item ->
+        carrinhoAdapter = CarrinhoAdapter(emptyList()) { item ->
             carrinhoViewModel.removerItem(item)
             Toast.makeText(this, "Item removido", Toast.LENGTH_SHORT).show()
 
@@ -48,9 +48,9 @@ class CarrinhoActivity : AppCompatActivity() {
 
         carrinhoViewModel.listarCarrinho()
 
-        carrinhoViewModel.listaCarrinho.observe(this){ lista ->
+        carrinhoViewModel.listaCarrinho.observe(this) { lista ->
 
-            when(lista){
+            when (lista) {
 
                 is Resource.Carregando -> {
                 }
@@ -58,18 +58,18 @@ class CarrinhoActivity : AppCompatActivity() {
                 is Resource.Sucesso -> {
                     carrinhoAdapter.atualizarLista(lista.data ?: emptyList())
 
-                    if (lista.data.isNullOrEmpty()){
+                    if (lista.data.isNullOrEmpty()) {
                         binding.txtCarrinhoVazio.visibility = View.VISIBLE
                         binding.recyclerCarrinho.visibility = View.GONE
                         binding.btnFinalizar.visibility = View.GONE
-                    }else{
+                    } else {
                         binding.txtCarrinhoVazio.visibility = View.GONE
                         binding.recyclerCarrinho.visibility = View.VISIBLE
                         binding.btnFinalizar.visibility = View.VISIBLE
                     }
                 }
 
-                is Resource.Erro ->{
+                is Resource.Erro -> {
                     Toast.makeText(this, "${lista.mensagem}", Toast.LENGTH_SHORT).show()
                 }
 
@@ -77,7 +77,7 @@ class CarrinhoActivity : AppCompatActivity() {
 
         }
 
-        carrinhoViewModel.totalCarrinho.observe(this){ total ->
+        carrinhoViewModel.totalCarrinho.observe(this) { total ->
 
             totalCarrinho = total
 
@@ -86,24 +86,32 @@ class CarrinhoActivity : AppCompatActivity() {
             binding.txtTotal.text = "Total: R$ %.2f".format(total)
 
         }
-        binding.btnFinalizar.setOnClickListener {
 
+
+
+
+        binding.btnFinalizar.setOnClickListener {
 
             val usuarioLogado = getSharedPreferences("usuario", MODE_PRIVATE)
             val logado = usuarioLogado.getBoolean("logado", false)
 
-            if (logado){
+            if (logado) {
                 abrirPagamento()
-            }else{
+            } else {
                 val intent = Intent(this, CadastroActivity::class.java)
                 intent.putExtra("TOTAL", totalCarrinho)
                 startActivity(intent)
 
-                }
             }
-
-
         }
+
+        binding.btnContinuarCompra.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+    }
+
+
+
 
     private fun abrirPagamento() {
 

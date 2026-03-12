@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompreFacil">
         <activity
-            android:name=".PRESENTATION.ui.SplashActivity"
+            android:name=".PRESENTATION.ui.MainActivity"
             android:exported="false" />
         <activity
             android:name=".PRESENTATION.ui.PagamentoActivity"
@@ -30,7 +30,7 @@
             android:name=".PRESENTATION.ui.ProdutoDetalhes"
             android:exported="false" />
         <activity
-            android:name=".PRESENTATION.ui.MainActivity"
+            android:name=".PRESENTATION.ui.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

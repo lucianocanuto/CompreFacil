@@ -2,6 +2,7 @@ package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -31,6 +32,11 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        binding.txtCarrinhoCont.setOnClickListener {
+            startActivity(Intent(this, CarrinhoActivity::class.java))
+            finish()
+        }
+
         produtoViewModel.buscarProduto()
         // Carrega carrinho ao abrir tela
         carrinhoViewModel.listarCarrinho()
@@ -51,12 +57,16 @@ class MainActivity : AppCompatActivity() {
             when(retorno){
                 is Resource.Carregando -> {
 
+                    binding.loadingContainer.visibility = View.VISIBLE
+
                 }
                 is Resource.Sucesso -> {
+                    binding.loadingContainer.visibility = View.GONE
                     adapter.submitList(retorno.data)
 
                 }
                 is Resource.Erro -> {
+                    binding.loadingContainer.visibility = View.GONE
                     Toast.makeText(this, "${retorno.mensagem}", Toast.LENGTH_SHORT).show()
 
                 }
@@ -68,5 +78,6 @@ class MainActivity : AppCompatActivity() {
             carrinhoViewModel.listarCarrinho()
             binding.txtCarrinhoCont.text = "🛒 ($quantidade)"
         }
+
     }
 }
