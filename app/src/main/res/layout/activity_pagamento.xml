@@ -32,12 +32,13 @@
             android:textSize="34sp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtCarrinhoCont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -67,6 +68,13 @@
             android:layout_marginBottom="32dp"
             android:text="Total: R$ 0,00"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtStatusPagamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/progressPagamento"

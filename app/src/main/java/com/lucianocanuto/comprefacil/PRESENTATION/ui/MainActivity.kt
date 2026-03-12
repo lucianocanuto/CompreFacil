@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.CarrinhoViewModel
 import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.ProdutosViewModel
 import com.lucianocanuto.comprefacil.UTIL.CompreFacilLogo
 import com.lucianocanuto.comprefacil.UTIL.Resource
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val produtoViewModel: ProdutosViewModel by viewModels()
+    private val carrinhoViewModel: CarrinhoViewModel by viewModels()
     private lateinit var adapter : ProdutosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         produtoViewModel.buscarProduto()
+        // Carrega carrinho ao abrir tela
+        carrinhoViewModel.listarCarrinho()
         binding.txtLogo.text = CompreFacilLogo()
 
 
@@ -57,6 +61,12 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
+        }
+        // Observer do contador do carrinho
+        carrinhoViewModel.contadorCarrinho.observe(this) { quantidade ->
+            //Atualiza contador
+            carrinhoViewModel.listarCarrinho()
+            binding.txtCarrinhoCont.text = "🛒 ($quantidade)"
         }
     }
 }

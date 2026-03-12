@@ -25,4 +25,8 @@ class CarrinhoRepository @Inject constructor(
         carrinhoDao.removerProduto(item)
     }
 
+    suspend fun limparCarrinho(){
+        carrinhoDao.limparCarrinho()
+    }
+
 }
