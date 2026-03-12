@@ -7,20 +7,14 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.lucianocanuto.comprefacil.DATA.RoomDataBase.CarrinhoDao
-import com.lucianocanuto.comprefacil.DATA.RoomDataBase.CarrinhoItem
 import com.lucianocanuto.comprefacil.DOMAIN.model.Produto
+import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.CarrinhoViewModel
 import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.DestalhesProdutoViewModel
-import com.lucianocanuto.comprefacil.R
 import com.lucianocanuto.comprefacil.UTIL.CompreFacilLogo
 import com.lucianocanuto.comprefacil.UTIL.Resource
 import com.lucianocanuto.comprefacil.databinding.ActivityProdutoDetalhesBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ProdutoDetalhes : AppCompatActivity() {
@@ -30,16 +24,24 @@ class ProdutoDetalhes : AppCompatActivity() {
     }
 
     private val dtProdutoViewModel: DestalhesProdutoViewModel by viewModels()
+    private val carrinhoViewModel: CarrinhoViewModel by viewModels()
 
     private var produtoAtual: Produto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Log.e("teste", "TELA DETALHES ABRIU")
+
         enableEdgeToEdge()
         setContentView(binding.root)
 
         binding.txtLogo.text = CompreFacilLogo()
+
+        // Carrega carrinho ao abrir tela
+        carrinhoViewModel.listarCarrinho()
+
+
 
         val id = intent.getIntExtra("produtoId", -1)
 
@@ -58,6 +60,7 @@ class ProdutoDetalhes : AppCompatActivity() {
                 }
 
                 is Resource.Sucesso -> {
+
                     val produto = resource.data
                     produtoAtual = produto
 
@@ -71,28 +74,42 @@ class ProdutoDetalhes : AppCompatActivity() {
                 }
 
                 is Resource.Erro -> {
-                    // erro
+                    Toast.makeText(this, "Erro ao carregar produto", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
 
         binding.btnCarrinho.setOnClickListener {
 
-                produtoAtual?.let {
-                    dtProdutoViewModel.adicionarAoCarrinho(it)
-                }
-            Toast.makeText(this,
-                "Produto: ${it.id} adicionado com sucesso!",
-                Toast.LENGTH_SHORT).show()
+            produtoAtual?.let {
+
+                dtProdutoViewModel.adicionarAoCarrinho(it)
+
+                Toast.makeText(
+                    this,
+                    "Produto adicionado ao carrinho!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
 
         }
 
         binding.btnVerCarrinho.setOnClickListener {
+
             val abrirCarrinho = Intent(this, CarrinhoActivity::class.java)
             startActivity(abrirCarrinho)
+
+        }
+
+        // Observer do contador do carrinho
+        carrinhoViewModel.contadorCarrinho.observe(this) { quantidade ->
+             //Atualiza contador
+                carrinhoViewModel.listarCarrinho()
+            binding.txtCarrinhoCont.text = "🛒 ($quantidade)"
         }
 
 
     }
+
 }

@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CompreFacil">
         <activity
+            android:name=".PRESENTATION.ui.SplashActivity"
+            android:exported="false" />
+        <activity
             android:name=".PRESENTATION.ui.PagamentoActivity"
             android:exported="false" />
         <activity

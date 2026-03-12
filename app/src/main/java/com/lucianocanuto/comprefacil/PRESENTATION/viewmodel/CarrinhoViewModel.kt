@@ -18,50 +18,85 @@ class CarrinhoViewModel @Inject constructor(
     private val carrinhoRepository : CarrinhoRepository
 ): ViewModel(){
 
-
-    private val carrinhoObsaervavel = MutableLiveData<Resource<List<CarrinhoItem>>>()
-    val listaCarrinho : LiveData<Resource<List<CarrinhoItem>>> = carrinhoObsaervavel
+    private val carrinhoObservavel = MutableLiveData<Resource<List<CarrinhoItem>>>()
+    val listaCarrinho : LiveData<Resource<List<CarrinhoItem>>> = carrinhoObservavel
 
     private val totalCarrinhoObservavel = MutableLiveData<Double>()
     val totalCarrinho: LiveData<Double> = totalCarrinhoObservavel
 
+    private val contadorCarrinhoObservavel = MutableLiveData<Int>()
+    val contadorCarrinho: LiveData<Int> = contadorCarrinhoObservavel
+
 
     fun listarCarrinho(){
 
-        carrinhoObsaervavel.value = Resource.Carregando()
+        carrinhoObservavel.value = Resource.Carregando()
 
         viewModelScope.launch {
 
             try {
+
                 val retorno = carrinhoRepository.listarCarrinho()
+
                 val total = retorno.sumOf { it.preco * it.quantidade }
+
                 totalCarrinhoObservavel.value = total
-                carrinhoObsaervavel.value = Resource.Sucesso(retorno)
+
+                carrinhoObservavel.value = Resource.Sucesso(retorno)
+
+                contadorCarrinhoObservavel.value =
+                    retorno.sumOf { it.quantidade }
+
+
 
             }catch (e: Exception){
-                carrinhoObsaervavel.value = Resource.Erro(
-                    "Erro ao listar ao carregar os produtos do carrinho!"
+
+                carrinhoObservavel.value = Resource.Erro(
+                    "Erro ao carregar carrinho"
                 )
+
             }
 
         }
     }
-    fun removerItem(item: CarrinhoItem){
+
+
+    fun adicionarItem(item: CarrinhoItem){
+
         viewModelScope.launch {
-            carrinhoRepository.removerProduto(item)
+
+            carrinhoRepository.adicionarProduto(item)
+
             listarCarrinho()
+
         }
 
     }
+
+
+    fun removerItem(item: CarrinhoItem){
+
+        viewModelScope.launch {
+
+            carrinhoRepository.removerProduto(item)
+
+            listarCarrinho()
+
+        }
+
+    }
+
 
     fun limparCarrinho(){
 
         viewModelScope.launch {
+
             carrinhoRepository.limparCarrinho()
+
+            listarCarrinho()
+
         }
 
     }
-
-
 
 }
