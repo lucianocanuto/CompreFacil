@@ -27,11 +27,12 @@ class CarrinhoActivity : AppCompatActivity() {
 
     private val carrinhoViewModel : CarrinhoViewModel by viewModels()
 
+    private var totalCarrinho: Double = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
-
 
 
 
@@ -50,9 +51,10 @@ class CarrinhoActivity : AppCompatActivity() {
         carrinhoViewModel.listaCarrinho.observe(this){ lista ->
 
             when(lista){
-                is Resource.Carregando -> {
 
+                is Resource.Carregando -> {
                 }
+
                 is Resource.Sucesso -> {
                     carrinhoAdapter.atualizarLista(lista.data ?: emptyList())
 
@@ -66,6 +68,7 @@ class CarrinhoActivity : AppCompatActivity() {
                         binding.btnFinalizar.visibility = View.VISIBLE
                     }
                 }
+
                 is Resource.Erro ->{
                     Toast.makeText(this, "${lista.mensagem}", Toast.LENGTH_SHORT).show()
                 }
@@ -75,6 +78,9 @@ class CarrinhoActivity : AppCompatActivity() {
         }
 
         carrinhoViewModel.totalCarrinho.observe(this){ total ->
+
+            totalCarrinho = total
+
             binding.textSubTotal.text = "Total: R$ %.2f".format(total)
             binding.txtFrete.text = "Frete: Voce tem frete gratis!"
             binding.txtTotal.text = "Total: R$ %.2f".format(total)
@@ -87,13 +93,29 @@ class CarrinhoActivity : AppCompatActivity() {
             val logado = usuarioLogado.getBoolean("logado", false)
 
             if (logado){
-                startActivity(Intent(this, PagamentoActivity::class.java))
+                abrirPagamento()
             }else{
-                startActivity(Intent(this,CadastroActivity::class.java))
+                val intent = Intent(this, CadastroActivity::class.java)
+                intent.putExtra("TOTAL", totalCarrinho)
+                startActivity(intent)
+
+                }
             }
 
 
         }
 
+    private fun abrirPagamento() {
+
+
+        val intent = Intent(this, PagamentoActivity::class.java)
+
+        intent.putExtra("TOTAL", totalCarrinho)
+
+        startActivity(intent)
+
     }
-}
+
+    }
+
+
