@@ -56,7 +56,7 @@
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="16dp"
             android:text="Finalizar Compra"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -65,15 +65,16 @@
             android:id="@+id/txtTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="20dp"
             android:text="Total: R$ 0,00"
             android:textSize="20sp" />
 
         <TextView
             android:id="@+id/txtStatusPagamento"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
+            android:textAlignment="center"
             android:textSize="18sp" />
 
         <ProgressBar
@@ -86,7 +87,12 @@
             android:id="@+id/btnPagar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pagar agora" />
+            android:backgroundTint="#DAA520"
+            android:text="Pagar agora"
+            android:textColor="#7F0000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:cornerRadius="0dp" />
 
     </LinearLayout>
 
