@@ -1,5 +1,6 @@
 package com.lucianocanuto.comprefacil.PRESENTATION.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.CarrinhoViewModel
 import com.lucianocanuto.comprefacil.PRESENTATION.viewmodel.PagamentoViewModel
 import com.lucianocanuto.comprefacil.R
 import com.lucianocanuto.comprefacil.UTIL.PagamentoStatus
@@ -21,6 +23,7 @@ class PagamentoActivity : AppCompatActivity() {
         ActivityPagamentoBinding.inflate(layoutInflater)
     }
     private val pagamentoViewModel : PagamentoViewModel by viewModels()
+    private val carrinhoViewModel: CarrinhoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,29 +47,33 @@ class PagamentoActivity : AppCompatActivity() {
                 is PagamentoStatus.Processando -> {
 
                     binding.progressPagamento.visibility = View.VISIBLE
+                    binding.txtStatusPagamento.text = "⏳ Processando pagamento..."
                     binding.btnPagar.isEnabled = false
+
+                    binding.txtStatusPagamento.alpha = 0f
+                    binding.txtStatusPagamento.animate()
+                        .alpha(1f)
+                        .setDuration(500)
+                        .start()
 
                 }
 
                 is PagamentoStatus.Sucesso -> {
 
                     binding.progressPagamento.visibility = View.GONE
+                    binding.txtStatusPagamento.text = "✅ Pagamento aprovado!"
 
-                    Toast.makeText(
-                        this,
-                        it.mensagem,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    carrinhoViewModel.limparCarrinho()
+
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
 
                 }
 
                 is PagamentoStatus.Erro -> {
 
-                    Toast.makeText(
-                        this,
-                        it.erro,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    binding.progressPagamento.visibility = View.GONE
+                    binding.txtStatusPagamento.text = "❌ Falha no pagamento"
 
                 }
 

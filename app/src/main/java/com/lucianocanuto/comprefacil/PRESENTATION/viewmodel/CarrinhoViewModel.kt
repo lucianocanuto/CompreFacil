@@ -54,6 +54,14 @@ class CarrinhoViewModel @Inject constructor(
 
     }
 
+    fun limparCarrinho(){
+
+        viewModelScope.launch {
+            carrinhoRepository.limparCarrinho()
+        }
+
+    }
+
 
 
 }
