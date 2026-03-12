@@ -26,6 +26,7 @@ class CadastroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(binding.root)
+        val total = intent.getDoubleExtra("TOTAL",0.0)
 
         binding.btnBuscarCep.setOnClickListener {
 
@@ -50,7 +51,11 @@ class CadastroActivity : AppCompatActivity() {
 
             Toast.makeText(this,"Cadastro realizado!",Toast.LENGTH_SHORT).show()
 
-            startActivity(Intent(this, CarrinhoActivity::class.java))
+            val intent = Intent(this, PagamentoActivity::class.java)
+
+            intent.putExtra("TOTAL", total)
+            startActivity(intent)
+
             finish()
         }
 
