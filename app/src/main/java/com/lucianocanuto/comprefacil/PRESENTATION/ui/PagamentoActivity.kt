@@ -63,11 +63,24 @@ class PagamentoActivity : AppCompatActivity() {
                     binding.progressPagamento.visibility = View.GONE
                     binding.txtStatusPagamento.text = "✅ Pagamento aprovado!"
 
-                    binding.txtStatusPagamento.alpha = 0f
+                    binding.txtStatusPagamento.animate()
+                        .scaleX(1.1f)
+                        .scaleY(1.1f)
+                        .setDuration(200)
+                        .withEndAction {
+                            binding.txtStatusPagamento.animate()
+                                .scaleX(1f)
+                                .scaleY(1f)
+                                .setDuration(200)
+                                .start()
+                        }
+                        .start()
+
+                    /*binding.txtStatusPagamento.alpha = 0f
                     binding.txtStatusPagamento.animate()
                         .alpha(1f)
                         .setDuration(500)
-                        .start()
+                        .start()*/
 
                     carrinhoViewModel.limparCarrinho()
 

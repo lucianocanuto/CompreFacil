@@ -73,10 +73,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
         // Observer do contador do carrinho
-        carrinhoViewModel.contadorCarrinho.observe(this) { quantidade ->
-            //Atualiza contador
+        carrinhoViewModel.contadorCarrinho.observe(this){
             carrinhoViewModel.listarCarrinho()
-            binding.txtCarrinhoCont.text = "🛒 ($quantidade)"
+            binding.txtCarrinhoCont.text = it.toString()
+
+            binding.txtCarrinhoCont.visibility =
+                if(it > 0) View.VISIBLE else View.GONE
         }
 
     }

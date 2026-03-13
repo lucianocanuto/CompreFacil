@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -95,6 +98,12 @@ class ProdutoDetalhes : AppCompatActivity() {
                 ).show()
 
             }
+
+            animarProdutoAoCarrinho(
+                binding.imgProdutoDetalhe,
+                binding.iconCarrinho
+            )
+
         }
 
 
@@ -110,13 +119,53 @@ class ProdutoDetalhes : AppCompatActivity() {
         }
 
         // Observer do contador do carrinho
-        carrinhoViewModel.contadorCarrinho.observe(this) { quantidade ->
-             //Atualiza contador
-                carrinhoViewModel.listarCarrinho()
-            binding.txtCarrinhoCont.text = "🛒 ($quantidade)"
+        carrinhoViewModel.contadorCarrinho.observe(this){
+            carrinhoViewModel.listarCarrinho()
+            binding.txtCarrinhoCont.text = it.toString()
+
+            binding.txtCarrinhoCont.visibility =
+                if(it > 0) View.VISIBLE else View.GONE
         }
 
-
     }
+
+    fun animarProdutoAoCarrinho(imgProduto: ImageView, carrinho: View) {
+
+        val root = window.decorView as ViewGroup
+
+        val animImg = ImageView(this)
+        animImg.setImageDrawable(imgProduto.drawable)
+
+        val locationProduto = IntArray(2)
+        val locationCarrinho = IntArray(2)
+
+        imgProduto.getLocationOnScreen(locationProduto)
+        carrinho.getLocationOnScreen(locationCarrinho)
+
+        val params = FrameLayout.LayoutParams(
+            imgProduto.width,
+            imgProduto.height
+        )
+
+        animImg.layoutParams = params
+        animImg.x = locationProduto[0].toFloat()
+        animImg.y = locationProduto[1].toFloat()
+
+        root.addView(animImg)
+
+        animImg.animate()
+            .x(locationCarrinho[0].toFloat())
+            .y(locationCarrinho[1].toFloat())
+            .scaleX(0.3f)
+            .scaleY(0.3f)
+            .setDuration(600)
+            .withEndAction {
+
+                root.removeView(animImg)
+
+            }
+            .start()
+    }
+
 
 }
